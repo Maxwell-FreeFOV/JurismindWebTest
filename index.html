@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>法义经纬 - AI法律智能协作平台</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --deep-blue: #1e40af;
+            --electric-blue: #3b82f6;
+            --neon-blue: #00b4d8;
+            --cyber-purple: #7c3aed;
+            --dark-space: #0f172a;
+            --light-space: #1e293b;
+            --accent-teal: #14b8a6;
+            --bright-teal: #2dd4bf;
+            --neon-pink: #ec4899;
+            --warning-orange: #f97316;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark-space);
+            color: white;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--deep-blue), var(--cyber-purple));
+            padding: 4rem 0 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+        
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, white, var(--bright-teal));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .tagline {
+            font-size: 1.4rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            position: relative;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(to right, var(--accent-teal), var(--neon-blue));
+            color: var(--dark-space);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3);
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(20, 184, 166, 0.5);
+        }
+        
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, var(--bright-teal), var(--neon-blue));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .cta-button:hover::after {
+            opacity: 1;
+        }
+        
+        .cta-button span {
+            position: relative;
+            z-index: 2;
+        }
+        
+        section {
+            padding: 6rem 0;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            background: linear-gradient(to right, white, var(--electric-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--electric-blue), var(--neon-pink));
+            margin: 1.5rem auto;
+            border-radius: 2px;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+        
+        .about-text {
+            flex: 1;
+            position: relative;
+        }
+        
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .about-text p::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.7rem;
+            width: 8px;
+            height: 8px;
+            background: var(--neon-blue);
+            border-radius: 50%;
+        }
+        
+        .about-image {
+            flex: 1;
+            position: relative;
+            perspective: 1000px;
+        }
+        
+        .about-image-inner {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .about-image:hover .about-image-inner {
+            transform: rotateY(10deg) rotateX(-5deg);
+        }
+        
+        .about-image img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .about-image::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: -20px;
+            bottom: -20px;
+            border: 2px solid var(--neon-blue);
+            border-radius: 15px;
+            z-index: -1;
+            opacity: 0.5;
+            transition: all 0.4s ease;
+        }
+        
+        .about-image:hover::after {
+            top: 15px;
+            left: 15px;
+            right: -15px;
+            bottom: -15px;
+            opacity: 0.8;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .feature-card {
+            background: linear-gradient(to bottom, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+            border-radius: 15px;
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--electric-blue), var(--neon-pink), var(--accent-teal));
+            z-index: -1;
+            border-radius: 16px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: transparent;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--neon-blue);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2);
+            color: var(--bright-teal);
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, white, var(--electric-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .feature-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 1.8rem;
+            line-height: 1.6;
+        }
+        
+        .feature-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--accent-teal);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-list li::before {
+            color: var(--neon-pink);
+            transform: scale(1.2);
+        }
+        
+        .tech-showcase {
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.15), rgba(124, 58, 237, 0.15));
+            padding: 6rem 0;
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(0 10%, 100% 0, 100% 90%, 0 100%);
+            margin: 4rem 0;
+        }
+        
+        .tech-showcase::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .tech-item {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 15px;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .tech-item:hover {
+            transform: translateY(-10px);
+            background: rgba(30, 41, 59, 0.9);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: var(--electric-blue);
+        }
+        
+        .tech-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--neon-blue);
+            transition: all 0.3s ease;
+        }
+        
+        .tech-item:hover .tech-icon {
+            transform: scale(1.2);
+            color: var(--bright-teal);
+        }
+        
+        .tech-item h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, white, var(--electric-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .contact {
+            text-align: center;
+            padding: 6rem 0;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(30, 41, 59, 0.7);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--bright-teal);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        footer {
+            background: linear-gradient(to right, var(--deep-blue), var(--cyber-purple));
+            padding: 3rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+            position: relative;
+            clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 100%);
+        }
+        
+        .footer-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .social-link {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            color: var(--bright-teal);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            opacity: 0.8;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                margin-top: 3rem;
+            }
+            
+            header {
+                padding: 3rem 0 5rem;
+            }
+            
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            section {
+                padding: 4rem 0;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .tech-showcase {
+                clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%);
+                padding: 4rem 0;
+            }
+            
+            .contact-form {
+                padding: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
+            }
+            
+            footer {
+                clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);
+            }
+        }
+
+
+        .footer-info {
+		    display: flex;
+		    justify-content: center;
+		    gap: 3rem;
+		    margin: 1.5rem 0;
+		    flex-wrap: wrap;
+		}
+
+		.footer-address, .footer-contact {
+		    display: flex;
+		    align-items: center;
+		    gap: 0.8rem;
+		    font-size: 0.95rem;
+		}
+
+		.footer-address i, .footer-contact i {
+		    color: var(--bright-teal);
+		    font-size: 1.1rem;
+		}
+
+		.footer-contact div {
+		    margin-bottom: 0.5rem;
+		}
+
+		@media (max-width: 576px) {
+		    .footer-info {
+		        flex-direction: column;
+		        gap: 1rem;
+		        text-align: center;
+		    }
+		    
+		    .footer-address, .footer-contact {
+		        justify-content: center;
+		    }
+		}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="particles" id="particles"></div>
+        <div class="container header-content">
+            <h1 class="logo">法义经纬</h1>
+            <p class="tagline">下一代AI法律智能协作平台 - 融合法律专业思维与前沿人工智能技术</p>
+            <a href="#contact" class="cta-button"><span>预约演示</span></a>
+        </div>
+    </header>
+    
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">重塑法律工作流程</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>法义经纬开创性地构建了深度人机协作新模式，将AI的分析、推理、生成能力与律师的专业法律思维完美结合，有效克服传统AI的幻觉问题与信息局限。</p>
+                    <p>我们的平台不仅是工具，更是律师的"专业外脑"，通过智能化处理文档工作，释放律师的专业价值，使其专注于核心法律问题的解决与战略决策。</p>
+                    <p>基于持续的学习反馈机制，系统不断优化升级，形成良性进化循环，实现AI与法律专业人士的共同成长。</p>
+                </div>
+                <div class="about-image">
+                    <div class="about-image-inner floating">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="AI法律协作">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="advantages">
+        <div class="container">
+            <h2 class="section-title">核心优势</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                    <h3 class="feature-title">极致效率</h3>
+                    <ul class="feature-list">
+                        <li>预置优化工作流与提示词模板，零学习成本</li>
+                        <li>智能上下文提取，自动关联案件全部材料</li>
+                        <li>一体化协作环境，告别信息碎片化</li>
+                        <li>智能文档自动生成与格式化</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                    <h3 class="feature-title">专业智能</h3>
+                    <ul class="feature-list">
+                        <li>多维度案件分析，覆盖全部关联因素</li>
+                        <li>主动式智能辅助，实时风险预警</li>
+                        <li>多智能体协同分析，模拟专家会诊</li>
+                        <li>法律逻辑推理引擎</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-bullseye"></i></div>
+                    <h3 class="feature-title">精准可靠</h3>
+                    <ul class="feature-list">
+                        <li>整合权威法律数据库与知识图谱</li>
+                        <li>多层级结果验证与反思机制</li>
+                        <li>专业领域微调模型</li>
+                        <li>动态证据链分析</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="tech-showcase" id="technology">
+        <div class="container">
+            <h2 class="section-title">技术架构</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <div class="tech-icon"><i class="fas fa-robot"></i></div>
+                    <h3>多智能体系统</h3>
+                    <p>角色化智能体分工协作，模拟法律团队工作模式，确保分析全面性</p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon"><i class="fas fa-project-diagram"></i></div>
+                    <h3>法律知识图谱</h3>
+                    <p>构建百万级法律实体关系网络，实现精准法条与案例关联</p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3>领域自适应学习</h3>
+                    <p>基于律师反馈的持续优化机制，不断提升专业适配度</p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon"><i class="fas fa-file-contract"></i></div>
+                    <h3>智能文档引擎</h3>
+                    <p>结构化文档生成与协作系统，支持实时多人协同编辑</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">开启智能法律协作</h2>
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <label for="name">姓名</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">邮箱</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">机构名称</label>
+                        <input type="text" id="company" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">咨询内容</label>
+                        <textarea id="message" class="form-control" required></textarea>
+                    </div>
+                    <button type="submit" class="cta-button" style="border: none; cursor: pointer;"><span>提交申请</span></button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+	<footer>
+	    <div class="container footer-content">
+	        <div class="logo" style="font-size: 2rem; margin-bottom: 1rem;">法义经纬</div>
+	        
+	        <!-- 新增地址信息 -->
+	        <div class="footer-info">
+	            <div class="footer-address">
+	                <i class="fas fa-map-marker-alt"></i>
+	                上海市浦东新区临港新城海洋一路399号海洋科技广场H3座
+	            </div>
+	            <div class="footer-contact">
+	                <div><i class="fas fa-phone"></i> 021-88889999</div>
+	                <div><i class="fas fa-envelope"></i> contact@fayijingwei.com</div>
+	            </div>
+	        </div>
+	        
+	        <div class="social-links">
+	            <a href="#" class="social-link"><i class="fab fa-weixin"></i></a>
+	            <a href="#" class="social-link"><i class="fab fa-weibo"></i></a>
+	            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+	            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+	        </div>
+	        <p class="copyright">© 2023 法义经纬 AI法律智能协作平台. 保留所有权利.</p>
+	    </div>
+	</footer>
+
+    <script>
+        // 粒子效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // 随机大小
+                const size = Math.random() * 5 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // 随机位置
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // 随机透明度
+                particle.style.opacity = Math.random() * 0.6 + 0.2;
+                
+                // 动画
+                const duration = Math.random() * 20 + 10;
+                particle.style.animation = `float ${duration}s ease-in-out infinite`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+            
+            // 滚动动画
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.feature-card, .tech-item, .about-image-inner');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // 初始化元素状态
+            document.querySelectorAll('.feature-card, .tech-item, .about-image-inner').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // 初始执行一次
+        });
+    </script>
+</body>
+</html>
