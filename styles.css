@@ -35,6 +35,8 @@ header {
     position: relative;
     overflow: hidden;
     clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
 }
 
 .particles {
@@ -89,7 +91,7 @@ header {
     position: relative;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3);
-    animation: fadeInUp 1s ease 0.4s both;
+    animation: pulse 2s ease infinite 0.4s, fadeInUp 1s ease 0.4s both;
 }
 
 .cta-button:hover {
@@ -238,6 +240,8 @@ section {
     border: 1px solid rgba(59, 130, 246, 0.2);
     position: relative;
     overflow: hidden;
+    transform-style: preserve-3d;
+    perspective: 1000px;
 }
 
 .feature-card::before {
@@ -259,9 +263,7 @@ section {
 }
 
 .feature-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    border-color: transparent;
+    transform: translateY(-10px) rotateX(5deg);
 }
 
 .feature-icon {
@@ -527,7 +529,41 @@ footer {
     }
 }
 
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.site-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 0px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
+    transition: all 0.3s ease;
+    animation: fadeInUp 1s ease;
+}
+
+.site-logo:hover {
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.8));
+}
+
 @media (max-width: 768px) {
+    .logo-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .site-logo {
+        width: 60px;
+        height: 60px;
+        border-radius: 0; 
+    }
+
     .about-content {
         flex-direction: column;
     }
@@ -551,4 +587,41 @@ footer {
     .section-title {
         font-size: 2rem;
     }
+}
+
+/* 添加新的动画效果 */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
+
+/* 添加波浪分割线效果 */
+.wave-divider {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.wave-divider svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 100px;
+}
+
+.wave-divider .shape-fill {
+    fill: var(--dark-space);
 }

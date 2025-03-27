@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     // Particle effect for header
     const particlesContainer = document.getElementById('particles');
@@ -107,5 +108,84 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         });
+    });
+});
+
+// 添加鼠标跟随效果
+document.addEventListener('mousemove', function(e) {
+    const cursor = document.createElement('div');
+    cursor.classList.add('cursor-trail');
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    document.body.appendChild(cursor);
+    
+    setTimeout(() => {
+        cursor.remove();
+    }, 1000);
+});
+
+// 添加点击火花效果
+function createSparkles(x, y) {
+    for (let i = 0; i < 10; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.classList.add('sparkle');
+        sparkle.style.left = x + 'px';
+        sparkle.style.top = y + 'px';
+        sparkle.style.background = `hsl(${Math.random() * 60 + 180}, 100%, 70%)`;
+        sparkle.style.transform = `rotate(${Math.random() * 360}deg)`;
+        sparkle.style.width = `${Math.random() * 10 + 5}px`;
+        sparkle.style.height = `${Math.random() * 3 + 1}px`;
+        
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = Math.random() * 5 + 2;
+        const xVelocity = Math.cos(angle) * velocity;
+        const yVelocity = Math.sin(angle) * velocity;
+        
+        document.body.appendChild(sparkle);
+        
+        let posX = x;
+        let posY = y;
+        let opacity = 1;
+        let size = 1;
+        
+        const animate = () => {
+            posX += xVelocity;
+            posY += yVelocity;
+            opacity -= 0.02;
+            size -= 0.01;
+            
+            sparkle.style.left = posX + 'px';
+            sparkle.style.top = posY + 'px';
+            sparkle.style.opacity = opacity;
+            sparkle.style.transform = `rotate(${angle}rad) scale(${size})`;
+            
+            if (opacity > 0) {
+                requestAnimationFrame(animate);
+            } else {
+                sparkle.remove();
+            }
+        };
+        
+        requestAnimationFrame(animate);
+    }
+}
+
+document.addEventListener('click', function(e) {
+    createSparkles(e.clientX, e.clientY);
+});
+
+// 添加视差滚动效果
+window.addEventListener('scroll', function() {
+    const scrollPosition = window.scrollY;
+    const aboutImage = document.querySelector('.about-image-inner');
+    const particles = document.querySelectorAll('.particle');
+    
+    if (aboutImage) {
+        aboutImage.style.transform = `rotateY(${scrollPosition * 0.1}deg) rotateX(${-scrollPosition * 0.05}deg)`;
+    }
+    
+    particles.forEach(particle => {
+        const speed = parseFloat(particle.getAttribute('data-speed')) || 0.5;
+        particle.style.transform = `translateY(${scrollPosition * speed * 0.2}px)`;
     });
 });
