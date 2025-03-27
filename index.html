@@ -593,6 +593,183 @@
 		        justify-content: center;
 		    }
 		}
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .screenshot-item {
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .screenshot-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border-color: var(--electric-blue);
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .screenshot-item p {
+            padding: 1rem;
+            text-align: center;
+            margin: 0;
+            color: var(--bright-teal);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .screenshot-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .screenshot-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+                /* 新增图库样式 */
+                .screenshot-gallery {
+            position: relative;
+            margin-top: 3rem;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-container {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 600px;
+        }
+
+        .gallery-slide {
+            min-width: 100%;
+            position: relative;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .gallery-slide.active {
+            opacity: 1;
+        }
+
+        .gallery-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--bright-teal);
+            font-weight: 500;
+        }
+
+        .gallery-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            z-index: 10;
+        }
+
+        .gallery-prev, .gallery-next {
+            background: rgba(30, 41, 59, 0.7);
+            border: 2px solid var(--neon-blue);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-prev:hover, .gallery-next:hover {
+            background: var(--neon-blue);
+            transform: scale(1.1);
+        }
+
+        .gallery-dots {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .gallery-dots .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-dots .dot.active {
+            background: var(--bright-teal);
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 992px) {
+            .gallery-container {
+                height: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gallery-container {
+                height: 400px;
+            }
+            
+            .slide-caption {
+                font-size: 1rem;
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .gallery-container {
+                height: 300px;
+            }
+            
+            .gallery-controls {
+                bottom: 10px;
+            }
+            
+            .gallery-prev, .gallery-next {
+                width: 40px;
+                height: 40px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -601,7 +778,6 @@
         <div class="container header-content">
             <h1 class="logo">法义经纬</h1>
             <p class="tagline">下一代AI法律智能协作平台 - 融合法律专业思维与前沿人工智能技术</p>
-            <a href="#contact" class="cta-button"><span>申请试用</span></a>
         </div>
     </header>
     
@@ -689,33 +865,41 @@
         </div>
     </section>
     
-    <section id="contact" class="contact">
+    <section id="screenshots">
         <div class="container">
-            <h2 class="section-title">开启智能法律协作</h2>
-            <div class="contact-form">
-                <form>
-                    <div class="form-group">
-                        <label for="name">姓名</label>
-                        <input type="text" id="name" class="form-control" required>
+            <h2 class="section-title">功能界面展示</h2>
+            <div class="screenshot-gallery">
+                <div class="gallery-container">
+                    <div class="gallery-slide active">
+                        <img src="https://via.placeholder.com/1920x1080/1e293b/3b82f6?text=案件分析界面" alt="智能案件分析">
                     </div>
-                    <div class="form-group">
-                        <label for="email">邮箱</label>
-                        <input type="email" id="email" class="form-control" required>
+                    <div class="gallery-slide">
+                        <img src="https://via.placeholder.com/1920x1080/1e293b/3b82f6?text=文档生成界面" alt="智能文档生成">
                     </div>
-                    <div class="form-group">
-                        <label for="company">机构名称</label>
-                        <input type="text" id="company" class="form-control">
+                    <div class="gallery-slide">
+                        <img src="https://via.placeholder.com/1920x1080/1e293b/3b82f6?text=法律检索界面" alt="智能法律检索">
+
                     </div>
-                    <div class="form-group">
-                        <label for="message">申请详情</label>
-                        <textarea id="message" class="form-control" required></textarea>
+                    <div class="gallery-slide">
+                        <img src="https://via.placeholder.com/1920x1080/1e293b/3b82f6?text=协作工作区" alt="团队协作工作区">
                     </div>
-                    <button type="submit" class="cta-button" style="border: none; cursor: pointer;"><span>申请试用</span></button>
-                </form>
+                </div>
+                <div class="gallery-controls">
+                    <button class="gallery-prev"><i class="fas fa-chevron-left"></i></button>
+                    <div class="gallery-dots"></div>
+                    <button class="gallery-next"><i class="fas fa-chevron-right"></i></button>
+                </div>
             </div>
         </div>
     </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">开启智能法律协作</h2>
+        </div>
+    </section>
     
+
 	<footer>
 	    <div class="container footer-content">
 	        <div class="logo" style="font-size: 2rem; margin-bottom: 1rem;">法义经纬</div>
@@ -727,18 +911,10 @@
 	                上海市浦东新区临港新城海洋一路399号海洋科技广场H3座
 	            </div>
 	            <div class="footer-contact">
-	                <div><i class="fas fa-phone"></i> 021-88889999</div>
 	                <div><i class="fas fa-envelope"></i>info@jurismind.cn</div>
 	            </div>
 	        </div>
-	        
-	        <div class="social-links">
-	            <a href="#" class="social-link"><i class="fab fa-weixin"></i></a>
-	            <a href="#" class="social-link"><i class="fab fa-weibo"></i></a>
-	            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-	            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-	        </div>
-	        <p class="copyright">© 2025 法义经纬 AI法律智能协作平台. 保留所有权利.</p>
+	        <p class="copyright">© 2025 法义经纬 AI法律智能协作平台 保留所有权利</p>
 	    </div>
 	</footer>
 
@@ -796,6 +972,61 @@
             
             window.addEventListener('scroll', animateOnScroll);
             animateOnScroll(); // 初始执行一次
+        });
+
+
+        // 新增图库功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // ... existing particle code ...
+
+            // 图库功能
+            const gallery = document.querySelector('.gallery-container');
+            const slides = document.querySelectorAll('.gallery-slide');
+            const dotsContainer = document.querySelector('.gallery-dots');
+            let currentIndex = 0;
+
+            // 创建指示点
+            slides.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(index));
+                dotsContainer.appendChild(dot);
+            });
+
+            // 导航按钮
+            document.querySelector('.gallery-prev').addEventListener('click', () => {
+                goToSlide(currentIndex > 0 ? currentIndex - 1 : slides.length - 1);
+            });
+
+            document.querySelector('.gallery-next').addEventListener('click', () => {
+                goToSlide(currentIndex < slides.length - 1 ? currentIndex + 1 : 0);
+            });
+
+            function goToSlide(index) {
+                slides[currentIndex].classList.remove('active');
+                dotsContainer.children[currentIndex].classList.remove('active');
+                
+                currentIndex = index;
+                gallery.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                slides[currentIndex].classList.add('active');
+                dotsContainer.children[currentIndex].classList.add('active');
+            }
+
+            // 自动轮播
+            let interval = setInterval(() => {
+                goToSlide(currentIndex < slides.length - 1 ? currentIndex + 1 : 0);
+            }, 5000);
+
+            // 鼠标悬停暂停
+            const gallerySection = document.querySelector('.screenshot-gallery');
+            gallerySection.addEventListener('mouseenter', () => clearInterval(interval));
+            gallerySection.addEventListener('mouseleave', () => {
+                interval = setInterval(() => {
+                    goToSlide(currentIndex < slides.length - 1 ? currentIndex + 1 : 0);
+                }, 5000);
+            });
         });
     </script>
 </body>
