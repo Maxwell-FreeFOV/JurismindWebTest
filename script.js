@@ -72,19 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
     nextBtn.addEventListener('click', nextSlide);
     prevBtn.addEventListener('click', prevSlide);
     
-    // Auto-rotate gallery
-    let galleryInterval = setInterval(nextSlide, 5000);
-    
-    // Pause on hover
-    const gallery = document.querySelector('.gallery-container');
-    gallery.addEventListener('mouseenter', () => {
-        clearInterval(galleryInterval);
-    });
-    
-    gallery.addEventListener('mouseleave', () => {
-        galleryInterval = setInterval(nextSlide, 5000);
-    });
-    
     // Floating animation for elements with .floating class
     const floatingElements = document.querySelectorAll('.floating');
     floatingElements.forEach(el => {
